@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bou0x3w62vuss"]
+
+[ext_resource type="Script" path="res://ChatGPTAPI.gd" id="1_vgsoa"]
+
+[node name="ChatGPTAPI" type="HTTPRequest"]
+script = ExtResource("1_vgsoa")
