@@ -1,6 +1,8 @@
 # GodotGPT
 Experimental GPT + Godot 4 integration
 
+Creation Video: https://www.youtube.com/watch?v=87cOYBerFMo
+
 This is just for testing purposes! It's not intended to be used in production environment. The code is buggy and made in a couple of hours, but it's free. Enjoy.
 
 ## Installation
