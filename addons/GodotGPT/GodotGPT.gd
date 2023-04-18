@@ -1,4 +1,4 @@
-@tool
+tool
 extends EditorPlugin
 
 
@@ -21,17 +21,21 @@ func _exit_tree():
 func add_panel():
 
 	panel = PanelContainer.new()
-	panel.set_custom_minimum_size(Vector2(200, 600))
+	panel.set_custom_minimum_size(Vector2(100, 600))
 	panel.set_name("GodotGPT")
 	#dock.add_child(panel)
 	
 	# Add the side panel to the Upper Left (UL) dock slot of the left part of the editor.
 	# The editor has 4 dock slots (UL, UR, BL, BR) on each side (left/right) of the main screen.
+	#add_control_to_dock(DOCK_SLOT_LEFT_UL, panel)
 	add_control_to_dock(DOCK_SLOT_LEFT_UL, panel)
 	
+	#get_editor_interface().get_editor_viewport().add_child(panel)
+	
 	var vbox = VBoxContainer.new()
-	vbox.size = Vector2(200, 180)
-	vbox.position = Vector2(0, 0)
+	#vbox.size = Vector2(200, 180)
+	vbox.set_size(Vector2(200, 180))
+	vbox.set_position ( Vector2(0, 0))
 	panel.add_child(vbox)
 	
 	var label = Label.new()
@@ -39,47 +43,54 @@ func add_panel():
 	vbox.add_child(label)
 	
 	text_field = LineEdit.new()
-	text_field.size = Vector2(180, 20)
-	text_field.position = Vector2(10, 30)
+	text_field.set_size(Vector2(180, 20))
+	text_field.set_position( Vector2(10, 30))
 	vbox.add_child(text_field)
 	
 	checkbox = CheckBox.new()
-	checkbox.size = Vector2(180, 20)
-	checkbox.position = Vector2(10, 60)
+	checkbox.set_size( Vector2(180, 20))
+	checkbox.set_position(Vector2(10, 60))
 	checkbox.text = "Include Context (Scene & Signatures)"
 	vbox.add_child(checkbox)
 	
 	checkbox_all_code = CheckBox.new()
-	checkbox_all_code.size = Vector2(180, 20)
-	checkbox_all_code.position = Vector2(10, 60)
+	checkbox_all_code.set_size (Vector2(180, 20))
+	checkbox_all_code.set_position (Vector2(10, 60))
 	checkbox_all_code.text = "Include All Script"
 	vbox.add_child(checkbox_all_code)
 	
 	checkbox_explanation = CheckBox.new()
-	checkbox_explanation.size = Vector2(180, 20)
-	checkbox_explanation.position = Vector2(10, 60)
+	checkbox_explanation.set_size (Vector2(180, 20))
+	checkbox_explanation.set_position( Vector2(10, 60))
 	checkbox_explanation.text = "Explaination"
 	vbox.add_child(checkbox_explanation)
 	
 	button = Button.new()
-	button.size = Vector2(80, 20)
-	button.position = Vector2(60, 90)
+	button.set_size (Vector2(80, 20))
+	button.set_position(Vector2(60, 90))
 	button.text = "Send Request"
-	button.pressed.connect(send_request)
+	#button.pressed.connect(send_request)
+	button.connect("pressed", self, "send_request")
 	vbox.add_child(button)
 	
-	response_box = CodeEdit.new()
-	response_box.custom_minimum_size = Vector2(180, 600)
+	#response_box = CodeEdit.new()
+	response_box = TextEdit.new()
+	response_box.set_custom_minimum_size(Vector2(180, 500))
 	response_box.text = ""
-	response_box.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
-	response_box.caret_changed.connect(selection_changed)
+	#response_box.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	
+	response_box.set_wrap_enabled(true)
+	#response_box.caret_changed.connect(selection_changed)
 	vbox.add_child(response_box)
 	
 	copy_button = Button.new()
-	copy_button.size = Vector2(80, 20)
-	copy_button.position = Vector2(60, 90)
+	copy_button.set_size(Vector2(80, 20))
+	copy_button.set_position(Vector2(60, 90))
 	copy_button.text = "EXPERIMENTAL +10: Run Selected snippet"
-	copy_button.pressed.connect(copy_text)
+	#copy_button.pressed.connect(copy_text)
+	
+	copy_button.connect("pressed", self, "copy_text")
+	
 	vbox.add_child(copy_button)
 	
 func selection_changed():
@@ -182,7 +193,10 @@ func send_request():
 	
 	# Send request to GPT API
 	var gptapi = ChatGPTAPI.new()
-	gptapi.request_completed.connect(on_response)
+	#gptapi.request_completed.connect(on_response)
+	
+	gptapi.connect("request_completed", self, "on_response")
+	
 	add_child(gptapi)
 	
 	print_debug(context)
@@ -192,7 +206,7 @@ func send_request():
 
 func on_response(result, response_code, headers, body) -> void:
 	if response_code == HTTPClient.RESPONSE_OK:
-		var response = str_to_var(body.get_string_from_utf8())
+		var response = str2var(body.get_string_from_utf8())
 		print_debug("response", response)
 		
 		var text = response["choices"][0]["text"].strip_edges()
@@ -206,7 +220,7 @@ func on_response(result, response_code, headers, body) -> void:
 	elif response_code == HTTPClient.STATUS_DISCONNECTED:
 		print_debug("not connected to server")
 	else:
-		var response = str_to_var(body.get_string_from_utf8())
+		var response = str2var(body.get_string_from_utf8())
 		print_debug("ERROR: " + str(response_code))
 		print_debug("response", response)
 		
