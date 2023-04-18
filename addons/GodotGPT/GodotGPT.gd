@@ -139,9 +139,9 @@ func compile_function_signatures(sig_in):
 	return signatures
 	
 func send_request():
-	response_box.text = "Request...\n\nWait"
+	response_box.set_text("Request...\n\nWait")
 	
-	var request_text = text_field.text
+	var request_text = text_field.get_text()
 	var include_signatures = checkbox.is_pressed()
 	
 	# Get selected text in editor
@@ -149,7 +149,9 @@ func send_request():
 	var selected_text = ""
 	var context = {}
 	var prompt = "You are a GDScript 2.0 and Godot 4 Expert."
-	if checkbox_explanation.button_pressed:
+	
+	#if checkbox_explanation.button_pressed:
+	if checkbox_explanation.is_pressed():
 		prompt += " Be clear and specific on your explanation. Use examples if needed."
 	else:
 		prompt += " GDScript Code only with comments!."
@@ -168,10 +170,13 @@ func send_request():
 			prompt += "\n\nConsider the complete and existing function signatures: \n" + compile_function_signatures(script.get_script_method_list())
 			prompt += compile_scene_tree(get_scene_tree())
 			
-	var code_editor = get_editor_interface().get_script_editor().get_current_editor().get_base_editor()
+	#sdfhdshfsd
+	#var code_editor = get_editor_interface().get_script_editor().get_current_editor().get_base_editor()
+	var code_editor = RichTextLabel.new() #get_editor_interface().get_script_editor()
 	var sel_text = code_editor.get_selected_text()
 	
-	if checkbox_all_code.button_pressed:
+	#if checkbox_all_code.button_pressed:
+	if checkbox_all_code.is_pressed():
 		sel_text = get_editor_interface().get_script_editor().get_current_script().source_code
 	
 	if sel_text != "":
@@ -182,7 +187,8 @@ func send_request():
 		else:
 			prompt += "\n\nNew snippet:\n"
 	else:
-		if checkbox_explanation.button_pressed:
+		#if checkbox_explanation.button_pressed:
+		if checkbox_explanation.is_pressed():
 			prompt += "\n\nAnswer:\n"
 		else:
 			prompt += "\n\nCode Snippet:\n"
