@@ -48,7 +48,7 @@ func send_prompt(request: HTTPRequest, text: String) -> void:
 
 	print_debug(body.get_string_from_utf8())
 
-	var error = request.request("https://api.openai.com/v1/completions", headers, HTTPClient.METHOD_POST, body.get_string_from_utf8())
+	var error = request.request("https://api.openai.com/v1/completions", headers, false ,HTTPClient.METHOD_POST, body.get_string_from_utf8()) #, body.get_string_from_utf8()
 	if error != OK:
 		print_debug("An error occurred in the HTTP request.")
 	pass
