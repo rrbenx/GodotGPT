@@ -1,5 +1,6 @@
 # GodotGPT
 Experimental GPT + Godot 4 integration
+![Screenshot](https://github.com/Sam2much96/GodotGPT/blob/main/src/icon.png)
 
 Creation Video: https://www.youtube.com/watch?v=87cOYBerFMo
 
