@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bou0x3w62vuss"]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource type="Script" path="res://ChatGPTAPI.gd" id="1_vgsoa"]
+[ext_resource path="res://addons/GodotGPT/ChatGPTAPI.gd" type="Script" id=1]
 
 [node name="ChatGPTAPI" type="HTTPRequest"]
-script = ExtResource("1_vgsoa")
+script = ExtResource( 1 )
