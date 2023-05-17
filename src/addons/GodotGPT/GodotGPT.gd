@@ -69,7 +69,7 @@ func add_panel():
 	vbox.add_child(button)
 	
 	response_box = CodeEdit.new()
-	response_box.custom_minimum_size = Vector2(180, 600)
+	response_box.custom_minimum_size = Vector2(180, 500)
 	response_box.text = ""
 	response_box.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
 	response_box.caret_changed.connect(selection_changed)
@@ -157,7 +157,12 @@ func send_request():
 			prompt += "\n\nConsider the complete and existing function signatures: \n" + compile_function_signatures(script.get_script_method_list())
 			prompt += compile_scene_tree(get_scene_tree())
 			
+	#var code_editor = get_editor_interface().get_script_editor().get_current_editor().get_base_editor()
 	var code_editor = get_editor_interface().get_script_editor().get_current_editor().get_base_editor()
+	
+	# Debugger
+	#print ("Code Editor: ",code_editor)
+	
 	var sel_text = code_editor.get_selected_text()
 	
 	if checkbox_all_code.button_pressed:
