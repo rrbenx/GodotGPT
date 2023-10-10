@@ -13,19 +13,30 @@ _global_script_classes=[ {
 "class": "ChatGPTAPI",
 "language": "GDScript",
 "path": "res://addons/GodotGPT/ChatGPTAPI.gd"
+}, {
+"base": "Node",
+"class": "Llama2API",
+"language": "GDScript",
+"path": "res://addons/GodotGPT/Llama2API.gd"
 } ]
 _global_script_class_icons={
-"ChatGPTAPI": ""
+"ChatGPTAPI": "",
+"Llama2API": ""
 }
 
 [application]
 
 config/name="GodotGPT"
 config/icon="res://icon.png"
+config/openai_api="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"
 
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/GodotGPT/plugin.cfg" )
+
+[global]
+
+openai_api=""
 
 [gui]
 
