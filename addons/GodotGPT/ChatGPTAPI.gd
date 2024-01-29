@@ -31,7 +31,7 @@ func _request_callback(result, response_code, headers, body) -> void:
 func send_prompt(request: HTTPRequest, text: String) -> void:
 	var body = PackedByteArray()
 	body.append_array("{".to_utf8_buffer());
-	body.append_array("\"model\": \"text-davinci-003\",\n".to_utf8_buffer());
+	body.append_array("\"model\": \"gpt-3.5-turbo-instruct\",\n".to_utf8_buffer());
 	body.append_array(("\"prompt\": \"%s\",\n" % text).to_utf8_buffer());
 	body.append_array("\"max_tokens\": 2048,\n".to_utf8_buffer());
 	body.append_array("\"temperature\": 0.1,\n".to_utf8_buffer());
